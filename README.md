@@ -11,7 +11,7 @@ python setup.py install
 
 Decode binary from ascii list.
 
-```
+```py
 
 buffers = map( ord, session_str )
 data = transcoder.deserialize( buffers )
@@ -20,7 +20,7 @@ data = transcoder.deserialize( buffers )
 
 Encode dict into ascii list.
 
-```
+```py
 
 data["principalData"]["pythonttest"] = "123344"
 transcoder.serialize( data )
@@ -29,7 +29,7 @@ transcoder.serialize( data )
 
 ## Example
 
-```
+```py
 
 import base64
 import pylibmc
