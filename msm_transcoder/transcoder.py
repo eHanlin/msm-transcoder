@@ -58,7 +58,7 @@ class Transcoder( object ):
 
     def __encodeString( self, string ):
 
-        data = map( ord, string )
+        data = list(map( ord, string ))
 
         return {"length": len(data),"data":data}
 
