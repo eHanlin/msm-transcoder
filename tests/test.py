@@ -56,14 +56,14 @@ class TestStringMethods(unittest.TestCase):
 
   def __isNewVersion(self): return sys.version_info[0] > 2
 
-  def __getEncodingData(self, encoding_data):
+  def __getEncodingBData(self, encoding_data):
       text = ''.join( map( chr, encoding_data ) )
       if self.__isNewVersion():
           return text.encode('iso-8859-1')
       else:
           return text
 
-  def __getDecodingData(self, decoding_data):
+  def __getDecodingBuffer(self, decoding_data):
       if self.__isNewVersion():
           text = decoding_data.decode('iso-8859-1')
       else:
@@ -79,8 +79,8 @@ class TestStringMethods(unittest.TestCase):
   def test_base64(self):
       data = self.data
       encoding_data = self.transcoder.serialize( data )
-      encoding_base64_data = base64.b64encode( self.__getEncodingData(encoding_data) )
-      decoding_base64_data = self.__getDecodingData( base64.b64decode(encoding_base64_data) )
+      encoding_base64_data = base64.b64encode( self.__getEncodingBData(encoding_data) )
+      decoding_base64_data = self.__getDecodingBuffer( base64.b64decode(encoding_base64_data) )
       result = self.transcoder.deserialize( list(decoding_base64_data) )
       self.__assertDictEqual( data, result )
 
