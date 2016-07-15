@@ -96,7 +96,7 @@ class Transcoder( object ):
 
         self.__encodeNum( sessionObj.get( "authType" ), bytes_, 2 )
 
-        principalDataResult = self.__encodeString( json.dumps( sessionObj.get( "principalData") ) )
+        principalDataResult = self.__encodeString( json.dumps( sessionObj.get( "principalData"), ensure_ascii = False ) )
 
         principalDataResult["length"] = 0
 
@@ -112,11 +112,11 @@ class Transcoder( object ):
 
             self.__pushAll( bytes_, principalDataResult.get( "data" ) )
 
-            savedRequestDataResult = self.__encodeString( json.dumps( sessionObj.get( "savedRequestData" ) ) )
+            savedRequestDataResult = self.__encodeString( json.dumps( sessionObj.get( "savedRequestData" ), ensure_ascii = False ) )
             self.__encodeNum( savedRequestDataResult.get( "length" ), bytes_, 2 )
             self.__pushAll( bytes_, savedRequestDataResult.get( "data" ) )
 
-            savedPrincipalDataResult = self.__encodeString( json.dumps( sessionObj.get( "savedPrincipalDataResult" ) ) )
+            savedPrincipalDataResult = self.__encodeString( json.dumps( sessionObj.get( "savedPrincipalDataResult" ), ensure_ascii = False ) )
             self.__encodeNum( savedPrincipalDataResult.get( "length" ), bytes_, 2 )
             self.__pushAll( bytes_, savedPrincipalDataResult.get( "data" ) )
     
