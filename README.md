@@ -1,6 +1,8 @@
 msm-transcoder
 =================
 
+[https://github.com/eHanlin/memcached-session-manager/tree/1.8.3-base64](https://github.com/eHanlin/memcached-session-manager/tree/1.8.3-base64) is the same encoder and decoder.
+
 ## Install
 
 ```
@@ -9,8 +11,7 @@ python setup.py install
 
 ## Usage
 
-[https://github.com/eHanlin/memcached-session-manager/tree/1.8.3-base64](https://github.com/eHanlin/memcached-session-manager/tree/1.8.3-base64) is the same encoder and decoder.
-
+Decode binary from ascii list.
 
 ```py
 
