@@ -1,5 +1,6 @@
 
 import json
+import sys
 
 class Transcoder( object ):
 
@@ -96,7 +97,7 @@ class Transcoder( object ):
 
         self.__encodeNum( sessionObj.get( "authType" ), bytes_, 2 )
 
-        principalDataResult = self.__encodeString( json.dumps( sessionObj.get( "principalData"), ensure_ascii = False ) )
+        principalDataResult = self.__encodePrincipalData(sessionObj.get( "principalData"))
 
         principalDataResult["length"] = 0
 
@@ -122,6 +123,20 @@ class Transcoder( object ):
     
         return bytes_
 
+    def __encodePrincipalData(self, principalData):
+        if sys.version_info[0] > 2:
+            decode_json = json.dumps( principalData, ensure_ascii = False )
+            decode_json = decode_json.encode('utf-8').decode('iso-8859-1')
+        else:
+            decode_json = json.dumps( principalData )
+        binary_data = self.__encodeString(decode_json)
+        return binary_data
+
+    def __decodePrincipalData(self, dataBytes, fieldLen, position):
+        decoding_string = self.__decodeString( dataBytes, fieldLen, position )
+        if sys.version_info[0] > 2: decoding_string = decoding_string.encode('iso-8859-1').decode('utf-8')
+        return decoding_string
+
     def deserialize( self, dataBytes ):
 
         result = dict()
@@ -144,10 +159,10 @@ class Transcoder( object ):
 
             #print  self.__decodeString( dataBytes, result.get( "sessionFieldsDataLength" ), len( dataBytes ) - result.get( "sessionFieldsDataLength" ) )
             #import pdb;pdb.set_trace()
-            result["principalData"] = json.loads( self.__decodeString( dataBytes, result.get( "sessionFieldsDataLength" ), len( dataBytes ) - result.get( "sessionFieldsDataLength" ) ) )
+            result["principalData"] = json.loads( self.__decodePrincipalData( dataBytes, result.get( "sessionFieldsDataLength" ), len( dataBytes ) - result.get( "sessionFieldsDataLength" ) ) )
 
         else:
-            result["principalData"] = json.loads( self.__decodeString( dataBytes, 48 + result.get( "idLength" ) , result.get( "principalDataLength" ) ) )
+            result["principalData"] = json.loads( self.__decodePrincipalData( dataBytes, 48 + result.get( "idLength" ) , result.get( "principalDataLength" ) ) )
 
         result["savedRequestDataLength"] = self.__decodeNum( dataBytes, 48 + result.get( "idLength" ) + result.get("principalDataLength"), 2 )
 
