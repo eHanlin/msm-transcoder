@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/eHanlin/msm-transcoder-python.svg?branch=master)](https://travis-ci.org/eHanlin/msm-transcoder-python)
+
 msm-transcoder
 =================
 
