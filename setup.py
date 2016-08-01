@@ -5,7 +5,7 @@ except:
     from distutils.core import setup, find_packages
 
 setup(name='msm_transcoder',
-      version='1.2',
+      version='1.3.0',
       description='Encode and decode base64 data to binary data.',
       author='Sparrow Jang',
       author_email='sparrow.jang@gmail.com',
